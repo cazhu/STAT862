@@ -1,0 +1,1 @@
+http://stats.stackexchange.com/questions/69205/derivation-of-the-equation-of-ridge-regression

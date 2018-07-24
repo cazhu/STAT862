@@ -1,0 +1,17 @@
+{
+    "contents" : "\n\n############Q1###########\n\n###(a)#########\n# independence chains #\n\nbino = function (nsim, n, p) \n{\n  vec = vector(\"numeric\", nsim)\n  # how to choose vec[1]\n  vec[1] = 1\n  for (i in 2:nsim) {\n    y <- round (runif(1, min = 0, max = n), digits = 0)\n    aprob <- min(1, (dbinom(y, n, p)/dbinom(vec[i-1], n, p))/(dunif(y, min = 0, max = n)/dunif(vec[i-1], min = 0, max = n)))\n    u <- runif(1)\n    if (u < aprob) \n      vec[i] = y\n    else \n      vec[i] = vec[i-1]\n  }\n  return(vec)\n  \n}\n\nvec<-bino(10000, 20, 0.7)\nx0<-rbinom(10000, 20, 0.7)\n\n\nc(mean(x0), mean(vec))\nc(var(x0), var(vec))\n\n\npar(mfrow=c(2,2))\n\nplot(ts(vec))\nhist(vec, xlim = c(0, 20))\n\nplot(ts(x0))\nhist(x0, xlim = c(0, 20))\n\n#######(b)#############\n\n\nbino2 = function (nsim, n, p, sigma)\n{\n  vec = vector(\"numeric\", nsim)\n  vec[1] = n*p\n  for (i in 2:nsim) {\n    y = rnorm(1, vec[i], sigma )\n    y = round(y + vec[i-1], digits = 0)\n    aprob = min(1, dbinom(y, n, p) / dbinom(vec[i-1], n, p))\n    u = runif(1)\n    if (u < aprob) \n      vec[i] = y\n    else \n      vec[i] = vec[i-1]\n  }\n  return(vec)\n}\n\nvec2<-bino2(10000, 20, 0.7, 0.1)\nvec3<-bino2(10000, 20, 0.7, 0.5)\nvec4<-bino2(10000, 20, 0.7, 10)\nx0<-rbinom(10000, 20, 0.7)\n\ncbind(mean(x0), mean(vec2), mean(vec3), mean(vec4))\n\ncbind(var(x0), var(vec2),var(vec3), var(vec4))\n\npar(mfrow=c(4,2))\n\nplot(ts(x0))\nhist(x0, xlim = c(0, 20))\n\nplot(ts(vec2))\nhist(vec2, xlim = c(0, 20))\n\nplot(ts(vec3))\nhist(vec3, xlim = c(0, 20))\n\nplot(ts(vec4))\nhist(vec4, xlim = c(0, 20))\n\n",
+    "created" : 1448742108678.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1982789616",
+    "id" : "C448ABE8",
+    "lastKnownWriteTime" : 1448746616,
+    "path" : "E:/Dropbox/STAT862/Assign4/assign4.R",
+    "project_path" : "assign4.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
